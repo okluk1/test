@@ -1,0 +1,585 @@
+::-webkit-scrollbar { width: 3px;
+	border-radius: 5px; /* Adicionando bordas arredondadas */ }
+::-webkit-scrollbar-track { 	background: rgba(20, 20, 20, 0.2);
+	border-radius: 5px; /* Adicionando bordas arredondadas */ }
+::-webkit-scrollbar-thumb { background: rgb(255, 0, 0);
+	border-radius: 5px; /* Adicionando bordas arredondadas */ }
+::-webkit-scrollbar-thumb:hover { background: rgb(255, 0, 0);
+	border-radius: 5px; /* Adicionando bordas arredondadas */ }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+:root {
+	font-size: 16px;
+}
+
+@media screen and (max-width: 800px), screen and (max-height: 600px){
+	:root {
+		font-size: 0.3rem;
+	}
+}
+@media screen and (min-width: 800px) and (min-height: 600px){
+	:root {
+		font-size: 0.425rem;
+	}
+}
+@media screen and (min-width: 1000px) and (min-height: 700px){
+	:root {
+		font-size: 0.55rem;
+	}
+}
+@media screen and (min-width: 1100px) and (min-height: 700px){
+	:root {
+		font-size: 0.6rem;
+	}
+}
+@media screen and (min-width: 1300px) and (min-height: 700px) {
+	:root {
+		font-size: 0.7rem;
+	}
+}
+@media screen and (min-width: 1400px) and (min-height: 700px){
+	:root {
+		font-size: 0.75rem;
+	}
+}
+@media screen and (min-width: 1600px) and (min-height: 800px){
+	:root {
+		font-size: 0.8rem;
+	}
+}
+@media screen and (min-width: 1750px) and (min-height: 900px){
+	:root {
+		font-size: 0.9rem;
+	}
+}
+@media screen and (min-width: 1850px) and (min-height: 1000px){
+	:root {
+		font-size: 1rem;
+	}
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-family: "Roboto";
+}
+
+* {
+	overflow: hidden;
+	user-select: none;
+	box-sizing: border-box;
+}
+
+.inventory {
+	width: 100vw;
+	height: 100vh;
+	display: none;
+	position: fixed;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	background: rgba(1, 1, 2, 0.63);
+	/* display: flex; */
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	gap:15px;
+}
+
+.innerInventory {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.sections {
+	height: 37rem;
+	display: flex;
+}
+
+.invLeft,
+.invRight {
+  row-gap: 3px;
+  display: grid;
+  column-gap: 3px;
+  overflow-y: scroll;
+  padding-right: 3px;
+  grid-template-columns: repeat(5, 8.8rem);
+}
+
+.action {
+	padding-bottom: 0px;
+	display: flex;
+	align-items: flex-start; /* Alterei de column para flex-start */
+	justify-content: flex-start; /* Mantém o alinhamento à esquerda */
+	width: 8.7rem;
+	height: 31.1rem;
+	margin: 0%;
+	flex-direction: column;
+	gap: 10px; /* Aumentei o gap para criar mais espaço entre os itens */
+  }
+  
+  .item {
+    width: 8.7rem;
+    min-height: 10rem;
+    display: flex;
+    flex-direction: column;
+    text-shadow: 1px 1px #000;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.685), rgba(255, 0, 0, 0.2)); /* Gradiente suave */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para dar profundidade */
+    padding: 10px;
+    overflow: hidden;
+    transition: all 0.0s ease-in-out; /* Transições suaves por padrão */
+}
+
+/* Remover a transição quando estiver sendo arrastado */
+.item.dragging {
+    transition: none; /* Remove transições durante o arrasto */
+    box-shadow: none; /* Remove a sombra durante o arrasto */
+}
+
+/* Efeitos de hover (continua funcionando quando o item não estiver sendo arrastado) */
+.item:hover {
+    background: linear-gradient(145deg, rgba(255, 0, 0, 0.2), rgba(150, 150, 150, 0.2));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px); /* Efeito de flutuar */
+}
+
+/* Opcional: se você quiser melhorar o efeito visual quando o item é movido e o mouse passa sobre ele */
+.item.dragging:hover {
+    background: linear-gradient(145deg, rgba(255, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
+    box-shadow: none; /* Retire a sombra enquanto arrasta */
+}
+
+
+
+/* Estilo normal para os itens populados */
+.populated {
+    background: rgba(255, 0, 0, 0.089); 
+    border-radius: 10px;
+    position: relative;
+}
+
+/* Estilo quando o item populado é hoverado */
+.populated:hover, .populated .hoverControl {
+    background: rgba(255, 0, 0, 0.089); 
+    border-radius: 10px;
+}
+
+
+/* Estilo para o número do slot */
+.slotNumber {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+
+.item .top {
+	color: #ffffff;
+	display: flex;
+	font-size: .70rem;
+	justify-content: space-between;
+}
+
+
+.action > .item:nth-child(1){
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='145px' width='115px'><text x='38' y='100' font-size='75' fill='gray' opacity='.5' font-family='Roboto, Arial, Helvetica, sans-serif'>1</text></svg>");
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.action > .item:nth-child(2){
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='145px' width='115px'><text x='37' y='100' font-size='75' fill='gray' opacity='.5' font-family='Roboto, Arial, Helvetica, sans-serif'>2</text></svg>");
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.action > .item:nth-child(3){
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='145px' width='115px'><text x='36' y='100' font-size='75' fill='gray' opacity='.5' font-family='Roboto, Arial, Helvetica, sans-serif'>3</text></svg>");
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.action > .item:nth-child(4){
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='145px' width='115px'><text x='38' y='100' font-size='75' fill='gray' opacity='.5' font-family='Roboto, Arial, Helvetica, sans-serif'>4</text></svg>");
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.action > .item:nth-child(5){
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='145px' width='115px'><text x='36' y='100' font-size='75' fill='gray' opacity='.5' font-family='Roboto, Arial, Helvetica, sans-serif'>5</text></svg>");
+	background-size: 50% 50%;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+
+.itemAmount {
+	margin: 15px 15px 0 0;
+	
+}
+
+.itemWeight {
+	margin: 15px 0 0 15px;
+	
+}
+
+.item .nameItem {
+    align-self: center;
+    width: 100%;
+    color: #f7f7f7;
+    padding: 8px 10px;
+    font-size: .68rem;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    background: rgba(150, 150, 150, 0.2);
+    border-radius: 10px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.item:hover .nameItem {
+    background: rgba(255, 0, 0, 0.2); /* Cor de fundo alterada no hover */
+    color: #fff; /* Altera a cor do texto no hover */
+}
+
+.item .durability {
+	width: 100%;
+	height: 4px;
+	margin-top: auto;
+	background: #bd0a0a;
+}
+
+.invMiddle {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+input {
+	text-align: center;
+}
+
+input::placeholder {
+	color: #ccc;
+}
+
+.invMiddle div, .invMiddle input {
+    border: 0;
+    width: 70%;
+    outline: none;
+    color: #fdfdfd;
+    padding: 16px 10;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Estilo dos botões */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espaço entre o ícone e o texto */
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: rgba(60, 60, 60, 0.6);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.button svg {
+    transition: transform 0.3s ease;
+    width: 18px;
+    height: 18px;
+}
+
+/* Efeitos de hover para os botões */
+.button:hover {
+    background: rgba(255, 0, 0, 0.5);
+    transform: scale(1.05); /* Leve aumento de tamanho */
+}
+
+.button:hover svg {
+    transform: rotate(15deg); /* Gira o ícone levemente */
+}
+
+/* Específico para o botão Lixo */
+.button.trash {
+    background: rgba(49, 2, 2, 0.534);
+}
+
+.button.trash:hover {
+    background: rgba(255, 50, 50, 0.8);
+}
+
+/* Específico para o botão Enviar */
+.button.send {
+    background: rgba(49, 2, 2, 0.534);
+}
+
+.button.send:hover {
+    background: rgba(49, 2, 2, 0.534);
+}
+
+/* Específico para o botão Usar */
+.button.use {
+    background: rgba(54, 1, 1, 0.6);
+}
+
+.button.use:hover {
+    background: rgba(211, 211, 211, 0.89);
+}
+
+.button span {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+
+/* Estilos para os botões */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #444;
+    color: #ffffff;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.button svg {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+}
+
+.button:hover {
+    background-color: #c20d0d; /* Cor ao passar o mouse */
+    transform: scale(1.05); /* Efeito de aumentar o botão */
+}
+
+.button span {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.button.use:hover {
+    background-color: #3b0404; /* Cor para o botão "USAR" */
+}
+
+.button.send:hover {
+    background-color: #3b0404; /* Cor para o botão "ENVIAR" */
+}
+
+.button.trash:hover {
+    background-color: #3b0404; /* Cor para o botão "LIXO" */
+}
+
+
+
+
+
+#weightTextRight {
+	float: right;
+	color: #b83030;
+	font-size: 12px;
+	min-width: 40.0rem;
+	max-width: 40.0rem;
+	text-align: left;
+	margin-left: 15px;
+	margin-bottom: 15px;
+	letter-spacing: 1px;
+}
+
+#weightBarRight {
+	float: right;
+	min-height: 10px;
+	max-height: 10px;
+	min-width: 40.0rem;
+	max-width: 40.0rem;
+	margin-bottom: 5px;
+	background: rgba(121, 18, 18, 0.2);
+}
+
+
+
+.ui-helper-hidden-accessible {
+	display: none;
+}
+
+.ui-tooltip {
+	color: #ffffff;
+	z-index: 9999;
+	font-size: 11px;
+	max-width: 400px;
+	border-radius: 10px;
+	position: absolute;
+	letter-spacing: 1px;
+	padding: 20px 20px 15px;
+	background: rgba(0, 0, 0, 0.315);
+}
+
+.ui-tooltip:hover {
+	display: none;
+}
+
+.ui-tooltip item {
+	float: left;
+	font-size: 18px;
+	min-width: 225px;
+	letter-spacing: 2px;
+}
+
+.ui-tooltip legenda {
+	float: left;
+	max-width: 250px;
+	min-width: 250px;
+	margin-top: 10px;
+	padding-top: 10px;
+	line-height: 20px;
+	letter-spacing: 2px;
+	border-top: 1px solid #7c1e1e;
+}
+
+.ui-tooltip b {
+	font-weight: 300;
+}
+
+.ui-tooltip description {
+	float: left;
+	color: #790707;
+	font-size: 10px;
+	margin-top: 5px;
+	max-width: 250px;
+	min-width: 250px;
+}
+
+.ui-tooltip description green, .ui-tooltip description b {
+	color: #b8f5d4;
+}
+
+.ui-tooltip s {
+	color: #b40909;
+	padding: 0 5px;
+	text-decoration: none;
+}
+
+.ui-tooltip r {
+	color: #ffffff;
+}
+
+/* Estilo geral para a seção do peso */
+#weight {
+    position: fixed;
+    bottom: 190px;
+    right: 613px;
+    background-color: rgba(53, 3, 3, 0.616);
+    border-radius: 12px;
+    padding: 12px 35px;
+    box-shadow: 0 6px 18px rgba(53, 3, 3, 0.616);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out; /* Transição mais longa e suave */
+    animation: fadeInUp 0.6s forwards; /* Animação de entrada */
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#weight:hover {
+    background-color: rgba(53, 3, 3, 0.616); /* Altera a cor de fundo ao passar o mouse */
+    box-shadow: 0 10px 25px rgba(129, 9, 9, 0.8); /* Aumenta a sombra quando o mouse está sobre o elemento */
+    transform: translateY(-5px); /* Pequeno movimento para cima quando o mouse passa por cima */
+}
+
+#weight p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px rgba(209, 12, 12, 0.7); /* Sombra no texto para dar destaque */
+}
+
+.input-wrapper {
+    position: relative;
+    width: 70%; /* Ajuste de acordo com a largura desejada */
+}
+
+.amount {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    color: #fff;
+    background: rgba(53, 3, 3, 0.616);
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    text-align: center;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(53, 3, 3, 0.616);
+}
+
+.amount:focus {
+    background: rgba(53, 3, 3, 0.616);
+    box-shadow: 0 0 20px rgba(53, 3, 3, 0.616);
+}
+
+.amount-icon {
+    position: absolute;
+    right: 15px; /* Ajuste a posição conforme necessário */
+    top: 50%;
+    transform: translateY(-50%);
+    fill: none;
+    stroke: #fff; /* Cor do ícone */
+    transition: all 0.3s ease;
+    pointer-events: none; /* Impede que o ícone interfira na interação com o input */
+}
+
+/* Efeito de hover ou foco no input para mudar o ícone */
+.input-wrapper:hover .amount-icon {
+    stroke: #af4c4c; /* Muda a cor do ícone ao passar o mouse */
+}
+
+.amount:focus + .amount-icon {
+    stroke: #af4c4c; /* Cor do ícone verde ao focar no input */
+}
